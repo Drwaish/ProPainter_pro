@@ -56,6 +56,10 @@ Install mmcv-full
 ```bash
 pip install mmcv-full==1.4.8 -f https://download.openmmlab.com/mmcv/dist/cu111/torch1.9.0/index.html
 ```
+Install Libraries
+```bash
+pip install -r requirements.txt
+```
 Install following libraries
 ```bash
 pip install einops
