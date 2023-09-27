@@ -82,7 +82,7 @@ def get_meta_from_video(Seg_Tracker, input_video, grounding_caption):
     import subprocess
 
 # no Python Exception is thrown!
-    var = subprocess.call(f"python /content/ProPainter/inference_propainter.py --video {video_img} --mask {mask_img} --height 320 --width 576 --subvideo_length 30 --fp16" , shell = True)
+    var = subprocess.call(f"python ProPainter/inference_propainter.py --video {video_img} --mask {mask_img} --height 320 --width 576 --subvideo_length 30 --fp16" , shell = True)
     # print(os.subprocess(f"python ProPainter/inference_propainter.py --video {mask_image_path} --mask {video_image_path}"))
     print("var", var)
     if var == 0:

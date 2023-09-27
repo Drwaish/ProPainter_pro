@@ -194,11 +194,11 @@ if __name__ == '__main__':
     parser.add_argument(
         '--mask_dilation', type=int, default=6, help='Mask dilation for video and flow masking.')
     parser.add_argument(
-        "--ref_stride", type=int, default=20, help='Stride of global reference frames.')
+        "--ref_stride", type=int, default=5, help='Stride of global reference frames.')
     parser.add_argument(
-        "--neighbor_length", type=int, default=12, help='Length of local neighboring frames.')
+        "--neighbor_length", type=int, default=2, help='Length of local neighboring frames.')
     parser.add_argument(
-        "--subvideo_length", type=int, default=80, help='Length of sub-video for long video inference.')
+        "--subvideo_length", type=int, default=5, help='Length of sub-video for long video inference.')
     parser.add_argument(
         "--raft_iter", type=int, default=20, help='Iterations for RAFT inference.')
     parser.add_argument(
@@ -208,7 +208,7 @@ if __name__ == '__main__':
     parser.add_argument(
         '--scale_w', type=float, default=1.2, help='Outpainting scale of width for video_outpainting mode.')
     parser.add_argument(
-        '--save_fps', type=int, default=24, help='Frame per second. Default: 24')
+        '--save_fps', type=int, default= 18, help='Frame per second. Default: 24')
     parser.add_argument(
         '--save_frames', action='store_true', help='Save output frames. Default: False')
     parser.add_argument(

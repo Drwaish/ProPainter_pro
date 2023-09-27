@@ -31,10 +31,7 @@ Install gradio for interactive interface.
 ```bash
 pip install gradio 
 ```
-Change directory to Parent
-```bash
-cd ..
-```
+
 ### Pro-Painter
 ```bash
 git clone https://github.com/sczhou/ProPainter.git

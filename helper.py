@@ -8,4 +8,4 @@ os.replace("app.py", "Segment-and-Track-Anything/app.py")
 os.replace("seg_track_anything.py","Segment-and-Track-Anything/seg_track_anything.py")
 
 #replace inference_propainter.py with ProPainter/inference_propainter.py 
-os.replace("inference_propainter.py", "ProPainter/inference_propainter.py")
+os.replace("inference_propainter.py", "Segment-and-Track-Anything/ProPainter/inference_propainter.py")
