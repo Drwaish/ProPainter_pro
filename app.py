@@ -185,9 +185,9 @@ def seg_track_app():
                 ''')
                 save_fps = gr.Radio([16, 18, 24, 30],label= "Select frame per second of video", value = 18)
                 gr.Markdown('''
-                <b> Select Resolution according to you Computational Resources.</b> 
+                <b> Select length according to you Computational Resources.</b> 
                 ''')
-                sub_video_length = gr.Radio([6, 8, 10 ,12],label= "Select frame per second of video", value = 6)
+                sub_video_length = gr.Radio([6, 8, 10 ,12],label= "Sub video length", value = 6)
 
         with gr.Column():
             grounding_caption = gr.Textbox(label="Detection Prompt")
