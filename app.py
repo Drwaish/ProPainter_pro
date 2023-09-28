@@ -48,11 +48,8 @@ def gd_detect(Seg_Tracker, origin_frame, grounding_caption):
     masked_frame = draw_mask(annotated_frame, predicted_mask)
     return Seg_Tracker, masked_frame, origin_frame
 
-def pro_painter(mask_image_path, video_image_path):
-    print("In proPainter")
-    print(os.system(f"!python ProPainter/inference_propainter.py --video {mask_image_path} --mask {video_image_path}"))
-    return True
-def get_meta_from_video(Seg_Tracker, input_video, grounding_caption):
+def get_meta_from_video(Seg_Tracker, input_video, grounding_caption,
+                         input_height, input_width, save_fps, sub_video_length):
     if input_video is None:
         return None, None, None, ""
     print("get meta information of input video")
@@ -82,7 +79,8 @@ def get_meta_from_video(Seg_Tracker, input_video, grounding_caption):
     import subprocess
 
 # no Python Exception is thrown!
-    var = subprocess.call(f"python ProPainter/inference_propainter.py --video {video_img} --mask {mask_img} --height 320 --width 576 --subvideo_length 30 --fp16" , shell = True)
+    var = subprocess.call(f"python3 ProPainter/inference_propainter.py --video {video_img} --mask {mask_img} --height {input_height} \
+                           --width {input_width} --save_fps {save_fps} --subvideo_length {sub_video_length} --fp16" , shell = True)
     # print(os.subprocess(f"python ProPainter/inference_propainter.py --video {mask_image_path} --mask {video_image_path}"))
     print("var", var)
     if var == 0:
@@ -147,7 +145,7 @@ def seg_track_app():
     ##########################################################
     ######################  Front-end ########################
     ##########################################################
-    app = gr.Blocks()
+    app = gr.Blocks(theme=gr.themes.Soft())
     with app:
         gr.Markdown(
             '''
@@ -156,20 +154,41 @@ def seg_track_app():
             </div>
             '''
         )
-
-        click_stack = gr.State([[],[]]) # Storage clicks status
-        origin_frame = gr.State(None)
+        gr.Markdown(
+            '''
+            <h1><center><b> Object Removal from Video </b></center></h1>
+            
+            '''
+        )
+        # click_stack = gr.State([[],[]]) # Storage clicks status
+        # origin_frame = gr.State(None)
         Seg_Tracker = gr.State(None)
-        current_frame_num = gr.State(None)
-        refine_idx = gr.State(None)
-        frame_num = gr.State(None)
-        aot_model = gr.State(None)
-        sam_gap = gr.State(None)
-        points_per_side = gr.State(None)
-        max_obj_num = gr.State(None)
+        # current_frame_num = gr.State(None)
+        # refine_idx = gr.State(None)
+        # frame_num = gr.State(None)
+        # aot_model = gr.State(None)
+        # sam_gap = gr.State(None)
+        # points_per_side = gr.State(None)
+        # max_obj_num = gr.State(None)
         with gr.Row():
             input_video = gr.Video(label='Input video')
-            input_first_frame = gr.Video(label='Masked Object Frame')
+            input_first_frame = gr.Video(label='Output Video')
+        with gr.Column():
+            with gr.Row():
+                gr.Markdown('''
+                <b> Select Resolution according to you Computational Resources.</b> 
+                ''')
+                input_height  = gr.Radio([128, 256, 512, 720],label= "Select Height of video", value = 128)
+                input_width  = gr.Radio([220, 320, 720, 1024],label= "Select Width of video", value = 220)
+                gr.Markdown('''
+                <b>Select frame per second.Length may vary. </b>
+                ''')
+                save_fps = gr.Radio([16, 18, 24, 30],label= "Select frame per second of video", value = 18)
+                gr.Markdown('''
+                <b> Select Resolution according to you Computational Resources.</b> 
+                ''')
+                sub_video_length = gr.Radio([6, 8, 10 ,12],label= "Select frame per second of video", value = 6)
+
         with gr.Column():
             grounding_caption = gr.Textbox(label="Detection Prompt")
             detect_button = gr.Button(value="Detect")
@@ -192,7 +211,7 @@ def seg_track_app():
         detect_button.click(
             fn=get_meta_from_video, 
             inputs=[
-                Seg_Tracker, input_video, grounding_caption
+                Seg_Tracker, input_video, grounding_caption, input_height, input_width, save_fps, sub_video_length
                 ], 
             outputs=[
                 Seg_Tracker, input_first_frame
